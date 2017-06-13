@@ -27,14 +27,21 @@ function getVisiblePostTypes() {
 	return $post_types;
 }
 
-
+/**
+ * Rewrites list endpoint
+ */
 add_action( 'rest_api_init', function () {
 	add_filter( "rest_post_query", function ( $args ) {
 		$args['post_type'] = getVisiblePostTypes();
+
 		return $args;
 	}, 10, 2 );
 
 } );
+
+/**
+ * Rewrites single endpoint
+ */
 add_filter( 'rest_pre_dispatch', function ( $none, $server, \WP_REST_Request $request ) {
 	$route = rtrim( $request->get_route(), '/' );
 	if ( preg_match( '/^\/wp\/v2\/posts\/\d+$/', $route ) ) {
