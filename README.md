@@ -1,2 +1,4 @@
-# wp-api-normalise-custom-post-type-endpoint
-Enable custom post types to have the same "posts" API endpoint
+# WP API Custom posts on posts endpoint
+This plugin makes default post endpoint query for different post types. 
+
+
