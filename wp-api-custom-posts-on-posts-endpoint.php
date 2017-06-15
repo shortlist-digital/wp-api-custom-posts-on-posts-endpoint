@@ -21,7 +21,7 @@ function getVisiblePostTypes() {
 		return $p->publicly_queryable;
 	} );
 	$post_types = array_map( function ( $p ) {
-		return '\'' . $p->name . '\'';
+		return $p->name;
 	}, $post_types );
 
 	return $post_types;
