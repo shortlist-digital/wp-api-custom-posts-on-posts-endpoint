@@ -47,9 +47,8 @@ add_filter( 'rest_pre_dispatch', function ( $none, $server, \WP_REST_Request $re
 	if ( preg_match( '/^\/wp\/v2\/posts\/\d+$/', $route ) ) {
 		$id = str_replace( '/wp/v2/posts/', '', $route );
 		$p  = get_post( (int) $id );
-		if ( $p && in_array( $p->post_type, getVisiblePostTypes() ) ) {
+		if ( $p && in_array( $p->post_type, getVisiblePostTypes() ) && $p->post_type != 'post' ) {
 			$request->set_route( str_replace( 'wp/v2/posts', 'wp/v2/' . $p->post_type, $route ) );
-
 			return rest_do_request( $request );
 		}
 	}
