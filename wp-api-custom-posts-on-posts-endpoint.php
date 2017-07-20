@@ -21,28 +21,34 @@ function getVisiblePostTypes() {
 		return $p->publicly_queryable;
 	} );
 	$post_types = array_map( function ( $p ) {
-		return '\'' . $p->name . '\'';
+		return $p->name;
 	}, $post_types );
 
 	return $post_types;
 }
 
-
+/**
+ * Rewrites list endpoint
+ */
 add_action( 'rest_api_init', function () {
 	add_filter( "rest_post_query", function ( $args ) {
 		$args['post_type'] = getVisiblePostTypes();
+
 		return $args;
 	}, 10, 2 );
 
 } );
+
+/**
+ * Rewrites single endpoint
+ */
 add_filter( 'rest_pre_dispatch', function ( $none, $server, \WP_REST_Request $request ) {
 	$route = rtrim( $request->get_route(), '/' );
 	if ( preg_match( '/^\/wp\/v2\/posts\/\d+$/', $route ) ) {
 		$id = str_replace( '/wp/v2/posts/', '', $route );
 		$p  = get_post( (int) $id );
-		if ( $p && in_array( $p->post_type, getVisiblePostTypes() ) ) {
+		if ( $p && in_array( $p->post_type, getVisiblePostTypes() ) && $p->post_type != 'post' ) {
 			$request->set_route( str_replace( 'wp/v2/posts', 'wp/v2/' . $p->post_type, $route ) );
-
 			return rest_do_request( $request );
 		}
 	}

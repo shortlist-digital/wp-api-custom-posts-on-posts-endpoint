@@ -1,0 +1,14 @@
+{
+  "name": "shortlist-digital/wp-api-custom-posts-on-posts-endpoint",
+  "description": "Change default wordpress post endpoint to return all available post types",
+  "type": "wordpress-plugin",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Maciej Paprocki",
+      "email": "maciekpaprocki@gmail.com"
+    }
+  ],
+  "minimum-stability": "dev",
+  "require": {}
+}
